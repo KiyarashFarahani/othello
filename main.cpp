@@ -51,7 +51,7 @@ void menuWindow() {
 
     string currentPath = filesystem::path(__FILE__).parent_path().string();
     sf::Font font;
-    if (!font.loadFromFile(currentPath + "/SpaceMono-Bold.ttf")) {
+    if (!font.loadFromFile(currentPath + "SpaceMono-Bold.ttf")) {
         cerr << "Failed to load font!" << endl;
         return;
     }
