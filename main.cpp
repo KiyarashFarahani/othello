@@ -49,9 +49,8 @@ void menuWindow() {
     sf::RenderWindow window(sf::VideoMode(1600, 1200), "Othello");
     window.setFramerateLimit(60);
 
-    string currentPath = filesystem::path(__FILE__).parent_path().string();
     sf::Font font;
-    if (!font.loadFromFile(currentPath + "SpaceMono-Bold.ttf")) {
+    if (!font.loadFromFile("SpaceMono-Bold.ttf")) {
         cerr << "Failed to load font!" << endl;
         return;
     }
