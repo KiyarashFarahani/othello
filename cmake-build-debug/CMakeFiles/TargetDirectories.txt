@@ -1,0 +1,3 @@
+/Users/kiyarash/Documents/Coding/SFML/othello/cmake-build-debug/CMakeFiles/othello.dir
+/Users/kiyarash/Documents/Coding/SFML/othello/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/kiyarash/Documents/Coding/SFML/othello/cmake-build-debug/CMakeFiles/rebuild_cache.dir
