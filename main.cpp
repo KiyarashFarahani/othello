@@ -1,24 +1,33 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+class user {
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    protected:
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        int id;
+        string username;
+        string password;
+        int best_score;
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+    public:
+
+        user () {}
+        user ( int id, string username, string password ) : id(id), username(username), password(password), best_score(0) {}
+
+        string getUsername () const { return username; }
+        string getPassword () const { return password; }
+        int getBestScore () const { return best_score; }
+
+        void setBestScore ( int score ) { best_score = score; }
+
+        // a function for login
+        // a function for sign up
+};
+
+int main(){
 
     return 0;
 }
