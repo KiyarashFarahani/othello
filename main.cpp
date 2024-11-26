@@ -27,6 +27,13 @@ class user {
         // a function for sign up
 };
 
+class admin : public user {
+
+    public:
+
+        //a function for delete user
+};
+
 int main(){
 
     return 0;
