@@ -45,8 +45,9 @@ int main(){
 }
 
 void menuWindow() {
+
     // Create a window
-    sf::RenderWindow window(sf::VideoMode(1600, 1200), "Othello");
+    sf::RenderWindow window(sf::VideoMode(1920,1080), "Othello", sf::Style::Fullscreen | sf::Style::Close | sf::Style::Titlebar );
     window.setFramerateLimit(60);
 
     sf::Font font;
@@ -59,10 +60,17 @@ void menuWindow() {
     int i = 1;
 
     while (window.isOpen()) {
-        sf::Event event{};
+
+        sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
+            switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::KeyPressed:
+                    if (event.key.code == sf::Keyboard::Escape) window.close();
+                    break;
+            }
         }
 
         sf::Text welcomeText;
