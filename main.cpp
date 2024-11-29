@@ -1,6 +1,17 @@
-#include "./include/Menu.hpp"
+//#include "./include/Menu.hpp"
+#include "./include/Game.hpp"
 
 int main() {
-    menuWindow();
+
+    Game game;
+
+    while ( game.running() ) {
+
+       game.update();
+
+       game.render();       
+        
+    }
+
     return 0;
 }
