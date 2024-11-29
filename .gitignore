@@ -1,5 +1,4 @@
 .vscode
-sfml-app.exe
 CMakeLists.txt
 /cmake-build-debug
 /.idea
