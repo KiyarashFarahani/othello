@@ -1,24 +1,10 @@
 #include "../include/Game.hpp"
 
-// constructor destructur
+Game::Game () { this->initVariables(); this->initWindow(); }
 
-Game::Game () {
+Game::~Game () { delete this->window; }
 
-    this->initVariables();
-    this->initWindow();
-}
-
-Game::~Game () {
-    
-    delete this->window;
-}
-
-// private functions
-
-void Game::initVariables () {
-
-    this->window = nullptr;
-}
+void Game::initVariables () { this->window = nullptr; }
 
 void Game::initWindow () {
 
@@ -51,14 +37,11 @@ void Game::pollEvents () {
     }
 }
 
-void Game::update () {
-
-    this->pollEvents();
-}
+void Game::update () { this->pollEvents(); }
 
 void Game::render () {
     
     this->window->clear(sf::Color(0,0,0,255));
-    //draw game objects
+    //draw game objects in here
     this->window->display();
 }

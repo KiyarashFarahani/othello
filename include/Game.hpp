@@ -2,17 +2,14 @@
 #define USER_HPP
 
 #include <SFML/Graphics.hpp>
-//#include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-//#include <SFML/Network.hpp>
+#include <iostream>
 
 class Game {
 
-    private:
+    protected:
 
-        //variables
-        //window
         sf::RenderWindow* window;
         sf::VideoMode videoMode;
         sf::Event ev;
@@ -25,10 +22,10 @@ class Game {
         Game();
         virtual ~Game();
 
-        void pollEvents();
         const bool running() const;
-        void update();
-        void render();
+        virtual void pollEvents();
+        virtual void update();
+        virtual void render();
 };
 
 #endif
