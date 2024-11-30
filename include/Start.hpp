@@ -1,5 +1,5 @@
-#ifndef Start_HPP
-#define Start_HPP
+#ifndef START_HPP
+#define START_HPP
 
 #include "Game.hpp"
 #include <string>
