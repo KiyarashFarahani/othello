@@ -1,7 +1,6 @@
 #include "../include/Game.hpp"
 
 Game::Game () { this->initVariables(); this->initWindow(); }
-
 Game::~Game () { delete this->window; }
 
 void Game::initVariables () { this->window = nullptr; }

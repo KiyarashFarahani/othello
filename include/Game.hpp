@@ -1,5 +1,5 @@
-#ifndef USER_HPP
-#define USER_HPP
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
