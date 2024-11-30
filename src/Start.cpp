@@ -1,5 +1,6 @@
 #include "../include/Start.hpp"
 
+// constructor
 Start::Start() {
     this->initStart();
     this->messageComplete = false;
@@ -7,8 +8,7 @@ Start::Start() {
     this->fadeProgress = 0.0f; // To track fade progress (from 0 to 1)
 }
 
-Start::~Start() {}
-
+// private
 void Start::initStart() {
     if (!this->font.loadFromFile("../assets/fonts/SpaceMono-Bold.ttf")) {
         std::cerr << "Failed to load font!" << std::endl;
@@ -34,6 +34,7 @@ void Start::initStart() {
     this->continueText.setPosition((float)this->window->getSize().x / 2, (float)this->window->getSize().y / 2 + 50);
 }
 
+// public
 void Start::update() {
     this->pollEvents();
 

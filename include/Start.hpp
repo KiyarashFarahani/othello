@@ -5,24 +5,26 @@
 #include <string>
 
 class Start : public Game {
-private:
-    sf::Font font;
-    sf::Text othelloText;
-    sf::Text continueText;
-    std::string welcomeMessage;
-    int messageIndex;
-    bool messageComplete;
-    bool fadeInProgress;
-    float fadeProgress;
 
-    void initStart();
+    private:
 
-public:
-    Start();
-    virtual ~Start();
+        sf::Font font;
+        sf::Text othelloText;
+        sf::Text continueText;
+        std::string welcomeMessage;
+        int messageIndex;
+        bool messageComplete;
+        bool fadeInProgress;
+        float fadeProgress;
 
-    void update() override;
-    void render() override;
+        void initStart();
+
+    public:
+
+        Start();
+
+        void update() override;
+        void render() override;
 };
 
 #endif
