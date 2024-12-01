@@ -1,8 +1,8 @@
 #include "../include/Admin.hpp"
 
-admin::admin(int id, string username, string password)
-    : user(id, username, password) {}
+Admin::Admin(int id, string username, string password)
+    : User(id, username, password) {}
 
-void admin::deleteUser() {
+void Admin::deleteUser() {
     // Implementation for deleting a user
 }

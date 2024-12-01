@@ -1,11 +1,11 @@
 #ifndef ADMIN_HPP
 #define ADMIN_HPP
 
-#include "user.hpp"
+#include "User.hpp"
 
-class admin : public user {
+class Admin : public User {
 public:
-    admin(int id, string username, string password);
+    Admin(int id, string username, string password);
     void deleteUser(); // Just an example placeholder
 };
 
