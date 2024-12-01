@@ -1,9 +1,8 @@
-#include "./include/Game.hpp"
-#include "./include/Start.hpp"
+#include "../include/Game.hpp"
 
 int main() {
 
-    Start game;
+    Game game;
 
     while ( game.running() ) {
 
