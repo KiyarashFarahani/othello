@@ -16,12 +16,11 @@ protected:
 public:
     User();
     User(int id, string username, string password);
-    virtual ~User();
     string getUsername() const;
     string getPassword() const;
     int getBestScore() const;
     void setBestScore(int score);
-    static User* login(const string& username, const string& password);
+    virtual User* login(const string& username, const string& password);
     static User* registerUser(const string& username, const string& password);
 };
 

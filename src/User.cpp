@@ -2,7 +2,6 @@
 
 User::User() : id(0), username(""), password(""), best_score(0) {}
 User::User(int id, string username, string password) : id(id), username(username), password(password), best_score(0) {}
-User::~User(){}
 
 string User::getUsername() const { return username; }
 string User::getPassword() const { return password; }
