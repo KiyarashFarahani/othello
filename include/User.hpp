@@ -13,10 +13,10 @@ protected:
     string username;
     string password;
     int best_score;
-
 public:
     User();
     User(int id, string username, string password);
+    virtual ~User();
     string getUsername() const;
     string getPassword() const;
     int getBestScore() const;

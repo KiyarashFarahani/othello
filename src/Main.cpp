@@ -1,4 +1,5 @@
 #include "../include/Game.hpp"
+#include "../include/User.hpp"
 
 int main() {
 
@@ -9,7 +10,7 @@ int main() {
        game.update();
 
        game.render();
-        
+
     }
 
     return 0;

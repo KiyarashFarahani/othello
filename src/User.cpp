@@ -1,13 +1,11 @@
 #include "../include/User.hpp"
 
 User::User() : id(0), username(""), password(""), best_score(0) {}
-
 User::User(int id, string username, string password) : id(id), username(username), password(password), best_score(0) {}
+User::~User(){}
 
 string User::getUsername() const { return username; }
-
 string User::getPassword() const { return password; }
-
 int User::getBestScore() const { return best_score; }
 
 void User::setBestScore(int score) { best_score = score; }
@@ -24,6 +22,11 @@ User* User::login(const string& username, const string& password) {
         size_t pos1 = line.find(',');
         size_t pos2 = line.find(',', pos1 + 1);
         size_t pos3 = line.find(',', pos2 + 1);
+
+        if (pos1 == string::npos || pos2 == string::npos || pos3 == string::npos) {
+            cerr << "Malformed line: " << line << endl;
+            continue;
+        }
 
         int id = stoi(line.substr(0, pos1));
         string fileUsername = line.substr(pos1 + 1, pos2 - pos1 - 1);
