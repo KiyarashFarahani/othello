@@ -1,6 +1,7 @@
 #ifndef USER_HPP
 #define USER_HPP
 
+#include <filesystem>
 #include <string>
 #include <fstream>
 #include <iostream>
