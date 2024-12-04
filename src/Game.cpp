@@ -64,27 +64,25 @@ sf::VertexArray Game::drawGrid() {
 	float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
 						   static_cast<float>(windowSize.y) / (gridSize * cellSize));
 
+	float offsetX = (windowSize.x - (gridSize * cellSize * scale)) / 2;
+	float offsetY = (windowSize.y - (gridSize * cellSize * scale)) / 2;
+
+
 	// grid lines
 	sf::VertexArray lines(sf::Lines, 2*2*(gridSize+1));
 
 	// vertical
 	for (int i = 0; i <= gridSize; ++i) {
-		lines.append(sf::Vertex(
-				sf::Vector2f(i * cellSize * scale, 0),
-				sf::Color::Black));
-		lines.append(sf::Vertex(
-				sf::Vector2f(i * cellSize * scale, gridSize * cellSize * scale),
-				sf::Color::Black));
+		float x = offsetX + i * cellSize * scale;
+		lines.append(sf::Vertex(sf::Vector2f(x, offsetY), sf::Color::Black));
+		lines.append(sf::Vertex(sf::Vector2f(x, offsetY + gridSize * cellSize * scale), sf::Color::Black));
 	}
 
 	// horizontal
 	for (int i = 0; i <= gridSize; ++i) {
-		lines.append(sf::Vertex(
-				sf::Vector2f(0, i * cellSize * scale),
-				sf::Color::Black));
-		lines.append(sf::Vertex(
-				sf::Vector2f(gridSize * cellSize * scale, i * cellSize * scale),
-				sf::Color::Black));
+		float y = offsetY + i * cellSize * scale;
+		lines.append(sf::Vertex(sf::Vector2f(offsetX, y), sf::Color::Black));
+		lines.append(sf::Vertex(sf::Vector2f(offsetX + gridSize * cellSize * scale, y), sf::Color::Black));
 	}
 
 	return lines;
