@@ -22,6 +22,7 @@ public:
     void setBestScore(int score);
     virtual User* login(const string& username, const string& password);
     static User* registerUser(const string& username, const string& password);
+	static void ensureUserFileExists(const std::string& filePath);
 };
 
 #endif

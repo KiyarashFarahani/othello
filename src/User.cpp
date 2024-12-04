@@ -9,7 +9,7 @@ int User::getBestScore() const { return best_score; }
 
 void User::setBestScore(int score) { best_score = score; }
 
-void ensureUserFileExists(const std::string& filePath) {
+void User::ensureUserFileExists(const std::string& filePath) {
 	if (!std::filesystem::exists(filePath)) {
 		std::ofstream outFile(filePath);
 		if (!outFile)

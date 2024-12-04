@@ -1,5 +1,5 @@
 #include "../include/Admin.hpp"
-#include "User.cpp"
+//#include "User.cpp"
 
 Admin::Admin() : User(0, "", "") {}
 Admin::Admin(int id, string username, string password) : User(id, username, password) {}
