@@ -13,7 +13,7 @@ void Game::initWindow () {
     this->window = new sf::RenderWindow (
 			this->videoMode,
 			"Othello",
-			//sf::Style::Fullscreen |
+			sf::Style::Fullscreen |
 			sf::Style::Close | sf::Style::Titlebar
 	);
     this->window->setFramerateLimit(60);
