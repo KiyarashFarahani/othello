@@ -26,6 +26,7 @@ class Game {
         virtual void pollEvents();
         virtual void update();
         virtual void render();
+		sf::VertexArray drawGrid();
 };
 
 #endif

@@ -3,7 +3,9 @@
 Game::Game () { this->initVariables(); this->initWindow(); }
 Game::~Game () { delete this->window; }
 
-void Game::initVariables () { this->window = nullptr; }
+void Game::initVariables () { this->window = nullptr;
+	this->videoMode = sf::VideoMode(400, 400);
+}
 
 void Game::initWindow () {
 
@@ -11,7 +13,8 @@ void Game::initWindow () {
     this->window = new sf::RenderWindow (
 			this->videoMode,
 			"Othello",
-			sf::Style::Fullscreen | sf::Style::Close | sf::Style::Titlebar
+			//sf::Style::Fullscreen |
+			sf::Style::Close | sf::Style::Titlebar
 	);
     this->window->setFramerateLimit(60);
 }
@@ -43,8 +46,46 @@ void Game::pollEvents () {
 void Game::update () { this->pollEvents(); }
 
 void Game::render () {
+	sf::VertexArray lines = drawGrid();
 
-    this->window->clear(sf::Color(0,0,0,255));
-    //draw game objects in here
-    this->window->display();
+	this->window->draw(lines);
+	this->window->display();
+}
+
+sf::VertexArray Game::drawGrid() {
+	this->window->clear(sf::Color::Green);
+
+	const int gridSize = 8;
+	const int cellSize = 50;
+
+	sf::Vector2u windowSize = this->window->getSize();
+
+	// adjust grid size
+	float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
+						   static_cast<float>(windowSize.y) / (gridSize * cellSize));
+
+	// grid lines
+	sf::VertexArray lines(sf::Lines, 2*2*(gridSize+1));
+
+	// vertical
+	for (int i = 0; i <= gridSize; ++i) {
+		lines.append(sf::Vertex(
+				sf::Vector2f(i * cellSize * scale, 0),
+				sf::Color::Black));
+		lines.append(sf::Vertex(
+				sf::Vector2f(i * cellSize * scale, gridSize * cellSize * scale),
+				sf::Color::Black));
+	}
+
+	// horizontal
+	for (int i = 0; i <= gridSize; ++i) {
+		lines.append(sf::Vertex(
+				sf::Vector2f(0, i * cellSize * scale),
+				sf::Color::Black));
+		lines.append(sf::Vertex(
+				sf::Vector2f(gridSize * cellSize * scale, i * cellSize * scale),
+				sf::Color::Black));
+	}
+
+	return lines;
 }
