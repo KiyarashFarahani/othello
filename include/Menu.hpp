@@ -3,6 +3,7 @@
 
 #include "User.hpp"
 #include "Admin.hpp"
+#include "Game.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>

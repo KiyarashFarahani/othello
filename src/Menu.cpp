@@ -81,7 +81,13 @@ void Menu::showLastGame() {}
 void Menu::showBestScores() {}
 
 // Start the game
-void Menu::playGame(User* user) {}
+void Menu::playGame(User* user) {
+	Game game;
+	while (game.running()) {
+		game.update();
+		game.render();
+	}
+}
 
 // Start the menu and main control loop
 void Menu::startMenu() {

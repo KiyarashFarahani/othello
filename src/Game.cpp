@@ -7,8 +7,12 @@ void Game::initVariables () { this->window = nullptr; }
 
 void Game::initWindow () {
 
-    this->videoMode.getDesktopMode();
-    this->window = new sf::RenderWindow ( this->videoMode, "Othello", sf::Style::Fullscreen | sf::Style::Close | sf::Style::Titlebar );
+    sf::VideoMode::getDesktopMode();
+    this->window = new sf::RenderWindow (
+			this->videoMode,
+			"Othello",
+			sf::Style::Fullscreen | sf::Style::Close | sf::Style::Titlebar
+	);
     this->window->setFramerateLimit(60);
 }
 
@@ -39,7 +43,7 @@ void Game::pollEvents () {
 void Game::update () { this->pollEvents(); }
 
 void Game::render () {
-    
+
     this->window->clear(sf::Color(0,0,0,255));
     //draw game objects in here
     this->window->display();
