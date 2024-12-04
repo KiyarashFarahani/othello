@@ -1,9 +1,11 @@
 #include "../include/Admin.hpp"
+#include "User.cpp"
 
 Admin::Admin() : User(0, "", "") {}
 Admin::Admin(int id, string username, string password) : User(id, username, password) {}
 
 Admin* Admin::login(const string& username, const string& password){
+	ensureUserFileExists("../users.txt");
     fstream file("../users.txt");
     if (!file) {
         cerr << "Unable to open the user file for reading.";
@@ -39,7 +41,8 @@ bool Admin::deleteUser(const string& username) {
 
     if(username=="admin") return false;
 
-    ifstream inputFile("../users.txt");
+	ensureUserFileExists("../users.txt");
+	ifstream inputFile("../users.txt");
     if (!inputFile) {
         cerr << "Unable to open the user file for reading." << endl;
         return false;

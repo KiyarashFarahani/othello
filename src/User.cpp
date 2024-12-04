@@ -9,8 +9,17 @@ int User::getBestScore() const { return best_score; }
 
 void User::setBestScore(int score) { best_score = score; }
 
+void ensureUserFileExists(const std::string& filePath) {
+	if (!std::filesystem::exists(filePath)) {
+		std::ofstream outFile(filePath);
+		if (!outFile)
+			std::cerr << "Error: Unable to create \"users.txt\"." << std::endl;
+	}
+}
+
 User* User::login(const string& username, const string& password) {
-    fstream file("../users.txt");
+	ensureUserFileExists("../users.txt");
+	fstream file("../users.txt");
     if (!file) {
         cerr << "Unable to open the user file for reading.";
         return nullptr;
@@ -42,6 +51,7 @@ User* User::login(const string& username, const string& password) {
 }
 
 User* User::registerUser(const string& username, const string& password) {
+	ensureUserFileExists("../users.txt");
     fstream file("../users.txt");
     if (!file) {
         cerr << "Unable to open the user file for reading." << endl;
@@ -70,6 +80,7 @@ User* User::registerUser(const string& username, const string& password) {
     int newId = id + 1;
     string newUserLine = to_string(newId) + "," + username + "," + password + ",0\n";
 
+	ensureUserFileExists("../users.txt");
     ofstream outFile("../users.txt", ios::app);
     if (!outFile) {
         cerr << "Unable to open the user file for writing." << endl;
