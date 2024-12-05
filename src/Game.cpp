@@ -3,19 +3,35 @@
 Game::Game () { this->initVariables(); this->initWindow(); }
 Game::~Game () { delete this->window; }
 
-void Game::initVariables () { this->window = nullptr;
-	this->videoMode = sf::VideoMode(400, 400);
-}
+void Game::initVariables () { this->window = nullptr; }
 
-void Game::initWindow () {
+void Game::initWindow() {
+    // Get the desktop resolution
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
 
-    sf::VideoMode::getDesktopMode();
-    this->window = new sf::RenderWindow (
-			this->videoMode,
-			"Othello",
-			//sf::Style::Fullscreen |
-			sf::Style::Close | sf::Style::Titlebar
-	);
+    // Calculate the aspect ratio
+    float aspectRatio = static_cast<float>(desktopMode.width) / desktopMode.height;
+
+    // Check if the aspect ratio is approximately 16:9
+    if (std::abs(aspectRatio - 16.0f / 9.0f) < 0.01f) {
+        // If 16:9, use fullscreen mode
+        this->videoMode = desktopMode;
+        this->window = new sf::RenderWindow(
+            this->videoMode,
+            "Othello",
+            sf::Style::Fullscreen | sf::Style::Close | sf::Style::Titlebar
+        );
+    } else {
+        // Otherwise, use 1280x720 resolution without fullscreen
+        this->videoMode = sf::VideoMode(1280, 720);
+        this->window = new sf::RenderWindow(
+            this->videoMode,
+            "Othello",
+            sf::Style::Close | sf::Style::Titlebar
+        );
+    }
+
+    // Set the framerate limit
     this->window->setFramerateLimit(60);
 }
 
@@ -46,14 +62,15 @@ void Game::pollEvents () {
 void Game::update () { this->pollEvents(); }
 
 void Game::render () {
+	this->window->clear(sf::Color(212, 172, 13, 255));
+	
 	sf::VertexArray lines = drawGrid();
-
 	this->window->draw(lines);
+
 	this->window->display();
 }
 
 sf::VertexArray Game::drawGrid() {
-	this->window->clear(sf::Color::Green);
 
 	const int gridSize = 8;
 	const int cellSize = 50;
