@@ -18,7 +18,7 @@ private:
     static void showLastGame();     // Show the last game played
     static void showBestScores();   // Show the best scores
     static void playGame(User* user);  // Start the game
-
+	static void clearScreen();
 public:
     static void startMenu();   // Start the menu and main control loop
 };

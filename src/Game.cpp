@@ -61,13 +61,38 @@ void Game::pollEvents () {
 
 void Game::update () { this->pollEvents(); }
 
-void Game::render () {
-	this->window->clear(sf::Color(212, 172, 13, 255));
-	
-	sf::VertexArray lines = drawGrid();
-	this->window->draw(lines);
+void Game::render() {
+    // Clear the window with the board's background color
+    this->window->clear(sf::Color(212, 172, 13, 255));
 
-	this->window->display();
+    // Get the window size and calculate grid dimensions
+    sf::Vector2u windowSize = this->window->getSize();
+    const int gridSize = 8;
+    const int cellSize = 50;
+    float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
+                           static_cast<float>(windowSize.y) / (gridSize * cellSize));
+
+    float boardWidth = gridSize * cellSize * scale;
+    float offsetX = (windowSize.x - boardWidth) / 2;
+
+    // Create black rectangles for the sides
+    sf::RectangleShape leftRect(sf::Vector2f(offsetX, windowSize.y));
+    leftRect.setFillColor(sf::Color::Black);
+
+    sf::RectangleShape rightRect(sf::Vector2f(offsetX, windowSize.y));
+    rightRect.setPosition(offsetX + boardWidth, 0);
+    rightRect.setFillColor(sf::Color::Black);
+
+    // Draw the black rectangles
+    this->window->draw(leftRect);
+    this->window->draw(rightRect);
+
+    // Draw the grid
+    sf::VertexArray lines = drawGrid();
+    this->window->draw(lines);
+
+    // Display the frame
+    this->window->display();
 }
 
 sf::VertexArray Game::drawGrid() {
@@ -81,27 +106,25 @@ sf::VertexArray Game::drawGrid() {
 	float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
 						   static_cast<float>(windowSize.y) / (gridSize * cellSize));
 
+	float offsetX = (windowSize.x - (gridSize * cellSize * scale)) / 2;
+	float offsetY = (windowSize.y - (gridSize * cellSize * scale)) / 2;
+
+
 	// grid lines
 	sf::VertexArray lines(sf::Lines, 2*2*(gridSize+1));
 
 	// vertical
 	for (int i = 0; i <= gridSize; ++i) {
-		lines.append(sf::Vertex(
-				sf::Vector2f(i * cellSize * scale, 0),
-				sf::Color::Black));
-		lines.append(sf::Vertex(
-				sf::Vector2f(i * cellSize * scale, gridSize * cellSize * scale),
-				sf::Color::Black));
+		float x = offsetX + i * cellSize * scale;
+		lines.append(sf::Vertex(sf::Vector2f(x, offsetY), sf::Color::Black));
+		lines.append(sf::Vertex(sf::Vector2f(x, offsetY + gridSize * cellSize * scale), sf::Color::Black));
 	}
 
 	// horizontal
 	for (int i = 0; i <= gridSize; ++i) {
-		lines.append(sf::Vertex(
-				sf::Vector2f(0, i * cellSize * scale),
-				sf::Color::Black));
-		lines.append(sf::Vertex(
-				sf::Vector2f(gridSize * cellSize * scale, i * cellSize * scale),
-				sf::Color::Black));
+		float y = offsetY + i * cellSize * scale;
+		lines.append(sf::Vertex(sf::Vector2f(offsetX, y), sf::Color::Black));
+		lines.append(sf::Vertex(sf::Vector2f(offsetX + gridSize * cellSize * scale, y), sf::Color::Black));
 	}
 
 	return lines;

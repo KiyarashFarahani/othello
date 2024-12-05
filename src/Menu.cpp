@@ -4,11 +4,6 @@ using namespace std;
 
 // Display the main menu
 void Menu::displayMainMenu() {
-    #ifdef _WIN32
-    system("cls");
-    #else
-    system("clear");
-    #endif
     cout << "************** Main Menu **************" << endl;
     cout << "1. Register User" << endl;
     cout << "2. Play Game" << endl;
@@ -19,6 +14,13 @@ void Menu::displayMainMenu() {
     cout << "Choose an option (1-5): ";
 }
 
+void Menu::clearScreen() {
+	#ifdef _WIN32
+		system("cls");
+	#else
+		system("clear");
+	#endif
+}
 // Register a new user
 void Menu::registerUser() {
     string username, password;
@@ -28,6 +30,7 @@ void Menu::registerUser() {
     cin >> password;
 
     User* newUser = User::registerUser(username, password);
+	clearScreen();
     if (newUser) {
         cout << "Registration successful!" << endl;
     } else {
@@ -42,7 +45,7 @@ User* Menu::loginUser() {
     cin >> username;
     cout << "Enter password: ";
     cin >> password;
-
+	clearScreen();
     if (username == "admin") {
         Admin admin(0, "admin", "admin");
         Admin* loggedInAdmin = admin.login(username, password);
@@ -52,7 +55,7 @@ User* Menu::loginUser() {
             cout << "Enter username to delete: ";
             string deleteUsername;
             cin >> deleteUsername;
-
+			clearScreen();
             if (loggedInAdmin->deleteUser(deleteUsername)) {
                 cout << "User " << deleteUsername << " successfully deleted!" << endl;
             } else {
@@ -87,6 +90,7 @@ void Menu::showBestScores() {}
 
 // Start the game
 void Menu::playGame(User* user) {
+	clearScreen();
 	Game game;
 	while (game.running()) {
 		game.update();
@@ -120,9 +124,11 @@ void Menu::startMenu() {
             showBestScores();
             break;
         case '5':
+			clearScreen();
             cout << "Exiting the game. Goodbye!" << endl;
             return;
         default:
+			clearScreen();
             cout << "Invalid choice. Please try again." << endl;
             break;
         }
