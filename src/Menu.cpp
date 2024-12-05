@@ -21,6 +21,7 @@ void Menu::clearScreen() {
 		system("clear");
 	#endif
 }
+
 // Register a new user
 void Menu::registerUser() {
     string username, password;
@@ -56,11 +57,8 @@ User* Menu::loginUser() {
             string deleteUsername;
             cin >> deleteUsername;
 			clearScreen();
-            if (loggedInAdmin->deleteUser(deleteUsername)) {
-                cout << "User " << deleteUsername << " successfully deleted!" << endl;
-            } else {
+            if (!loggedInAdmin->deleteUser(deleteUsername))
                 cout << "Failed to delete user: " << deleteUsername << endl;
-            }
 
             delete loggedInAdmin; // Clean up
         } else {

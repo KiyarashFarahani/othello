@@ -10,11 +10,29 @@ int User::getBestScore() const { return best_score; }
 void User::setBestScore(int score) { best_score = score; }
 
 void User::ensureUserFileExists(const std::string& filePath) {
-	if (!std::filesystem::exists(filePath)) {
-		std::ofstream outFile(filePath);
-		if (!outFile)
-			std::cerr << "Error: Unable to create \"users.txt\"." << std::endl;
-	}
+    if (!std::filesystem::exists(filePath)) {
+        std::ofstream outFile(filePath);
+        if (!outFile) {
+            std::cerr << "Error: Unable to create \"" << filePath << "\"." << std::endl;
+            return;
+        }
+
+        // Write the default admin entry
+        outFile << "0,admin,admin,0" << std::endl;
+        outFile.close();
+    } else {
+        // Check if the file is empty and add the admin entry if necessary
+        std::ifstream inFile(filePath);
+        if (inFile.peek() == std::ifstream::traits_type::eof()) {
+            inFile.close();
+            std::ofstream outFile(filePath, std::ios::app); // Open in append mode
+            if (!outFile) {
+                std::cerr << "Error: Unable to write to \"" << filePath << "\"." << std::endl;
+                return;
+            }
+            outFile << "0,admin,admin,0" << std::endl;
+        }
+    }
 }
 
 User* User::login(const string& username, const string& password) {
