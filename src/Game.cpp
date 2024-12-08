@@ -3,7 +3,29 @@
 Game::Game () { this->initVariables(); this->initWindow(); }
 Game::~Game () { delete this->window; }
 
-void Game::initVariables () { this->window = nullptr; }
+void Game::initVariables () {
+    this->window = nullptr;
+
+	// set the working directory to project root and load font
+	chdir("../");
+    if (!this->font.loadFromFile("assets/fonts/SpaceMono-Bold.ttf")) {
+        std::cout << "Error loading font\n";
+        return;
+    }
+    
+    // Initialize text objects
+    this->leftText.setFont(this->font);
+    this->rightText.setFont(this->font);
+    
+    this->leftText.setString("Player 1: ");
+    this->rightText.setString("Player 2: ");
+
+    this->leftText.setCharacterSize(24);
+    this->rightText.setCharacterSize(24);
+    
+    this->leftText.setFillColor(sf::Color::White);
+    this->rightText.setFillColor(sf::Color::White);
+}
 
 void Game::initWindow() {
     // Get the desktop resolution
@@ -69,8 +91,12 @@ void Game::render() {
     sf::Vector2u windowSize = this->window->getSize();
     const int gridSize = 8;
     const int cellSize = 50;
+    const float infoHeight = 70.0f;
+    
+    // Adjust the available height for the grid
+    float availableHeight = windowSize.y - infoHeight;
     float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
-                           static_cast<float>(windowSize.y) / (gridSize * cellSize));
+                          static_cast<float>(availableHeight) / (gridSize * cellSize));
 
     float boardWidth = gridSize * cellSize * scale;
     float offsetX = (windowSize.x - boardWidth) / 2;
@@ -83,49 +109,62 @@ void Game::render() {
     rightRect.setPosition(offsetX + boardWidth, 0);
     rightRect.setFillColor(sf::Color::Black);
 
-    // Draw the black rectangles
+    // Create info rectangle at the top
+    sf::RectangleShape infoRect(sf::Vector2f(boardWidth, 75));
+    infoRect.setPosition(offsetX, 0);
+    infoRect.setFillColor(sf::Color(0, 0, 0));
+
+    // Position the text
+    leftText.setPosition(offsetX + 10, 20);
+    rightText.setPosition(offsetX + boardWidth - rightText.getLocalBounds().width - 10, 20);
+
+    // Draw everything
     this->window->draw(leftRect);
     this->window->draw(rightRect);
-
+    this->window->draw(infoRect);
+    
     // Draw the grid
-    sf::VertexArray lines = drawGrid();
+    sf::VertexArray lines = drawGrid(infoHeight);  // Pass the infoHeight to drawGrid
     this->window->draw(lines);
+
+    // Draw the text
+    this->window->draw(leftText);
+    this->window->draw(rightText);
 
     // Display the frame
     this->window->display();
 }
 
-sf::VertexArray Game::drawGrid() {
+sf::VertexArray Game::drawGrid(float topOffset) {
+    const int gridSize = 8;
+    const int cellSize = 50;
 
-	const int gridSize = 8;
-	const int cellSize = 50;
+    sf::Vector2u windowSize = this->window->getSize();
 
-	sf::Vector2u windowSize = this->window->getSize();
+    // adjust grid size, accounting for top offset
+    float availableHeight = windowSize.y - topOffset;
+    float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
+                          static_cast<float>(availableHeight) / (gridSize * cellSize));
 
-	// adjust grid size
-	float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
-						   static_cast<float>(windowSize.y) / (gridSize * cellSize));
+    float offsetX = (windowSize.x - (gridSize * cellSize * scale)) / 2;
+    float offsetY = topOffset + (availableHeight - (gridSize * cellSize * scale)) / 2;
 
-	float offsetX = (windowSize.x - (gridSize * cellSize * scale)) / 2;
-	float offsetY = (windowSize.y - (gridSize * cellSize * scale)) / 2;
+    // grid lines
+    sf::VertexArray lines(sf::Lines, 2*2*(gridSize+1));
 
+    // vertical
+    for (int i = 0; i <= gridSize; ++i) {
+        float x = offsetX + i * cellSize * scale;
+        lines.append(sf::Vertex(sf::Vector2f(x, offsetY), sf::Color::Black));
+        lines.append(sf::Vertex(sf::Vector2f(x, offsetY + gridSize * cellSize * scale), sf::Color::Black));
+    }
 
-	// grid lines
-	sf::VertexArray lines(sf::Lines, 2*2*(gridSize+1));
+    // horizontal
+    for (int i = 0; i <= gridSize; ++i) {
+        float y = offsetY + i * cellSize * scale;
+        lines.append(sf::Vertex(sf::Vector2f(offsetX, y), sf::Color::Black));
+        lines.append(sf::Vertex(sf::Vector2f(offsetX + gridSize * cellSize * scale, y), sf::Color::Black));
+    }
 
-	// vertical
-	for (int i = 0; i <= gridSize; ++i) {
-		float x = offsetX + i * cellSize * scale;
-		lines.append(sf::Vertex(sf::Vector2f(x, offsetY), sf::Color::Black));
-		lines.append(sf::Vertex(sf::Vector2f(x, offsetY + gridSize * cellSize * scale), sf::Color::Black));
-	}
-
-	// horizontal
-	for (int i = 0; i <= gridSize; ++i) {
-		float y = offsetY + i * cellSize * scale;
-		lines.append(sf::Vertex(sf::Vector2f(offsetX, y), sf::Color::Black));
-		lines.append(sf::Vertex(sf::Vector2f(offsetX + gridSize * cellSize * scale, y), sf::Color::Black));
-	}
-
-	return lines;
+    return lines;
 }

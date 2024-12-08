@@ -5,6 +5,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <unistd.h>
 
 class Game {
 
@@ -13,6 +14,10 @@ class Game {
         sf::RenderWindow* window;
         sf::VideoMode videoMode;
         sf::Event ev;
+
+        sf::Font font;
+        sf::Text leftText;
+        sf::Text rightText;
 
         void initVariables();
         void initWindow();
@@ -26,7 +31,7 @@ class Game {
         virtual void pollEvents();
         virtual void update();
         virtual void render();
-		sf::VertexArray drawGrid();
+        sf::VertexArray drawGrid(float topOffset);
 };
 
 #endif
