@@ -4,6 +4,7 @@ using namespace std;
 
 // Display the main menu
 void Menu::displayMainMenu() {
+    clearScreen();
     cout << "************** Main Menu **************" << endl;
     cout << "1. Register User" << endl;
     cout << "2. Play Game" << endl;
