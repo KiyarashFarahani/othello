@@ -1,10 +1,10 @@
 #include "../include/Menu.hpp"
+#include "../include/User.hpp"
 
 using namespace std;
 
 // Display the main menu
 void Menu::displayMainMenu() {
-    clearScreen();
     cout << "************** Main Menu **************" << endl;
     cout << "1. Register User" << endl;
     cout << "2. Play Game" << endl;
@@ -85,7 +85,58 @@ User* Menu::loginUser() {
 void Menu::showLastGame() {}
 
 // Show the best scores
-void Menu::showBestScores() {}
+struct userScore {
+    int score;
+    string name;
+};
+void Menu::showBestScores() {
+    User::ensureUserFileExists("../users.txt");
+	fstream file("../users.txt");
+    if (!file) {
+        cerr << "Unable to open the user file for reading.";
+        return ;
+    }
+
+    vector<userScore> us;
+    string line;
+    while (getline(file, line)) {
+        size_t pos1 = line.find(',');
+        size_t pos2 = line.find(',', pos1 + 1);
+        size_t pos3 = line.find(',', pos2 + 1);
+        size_t pos4 = line.find('\n', pos3 + 1);
+
+        if (pos1 == string::npos || pos2 == string::npos || pos3 == string::npos) {
+            cerr << "Malformed line: " << line << endl;
+            continue;
+        }
+
+        userScore temp;
+        temp.name = line.substr(pos1 + 1, pos2 - pos1 - 1);
+        temp.score = stoi(line.substr(pos3 + 1, pos4 - pos3 -1));
+        us.push_back(temp);
+    }
+
+    bool condition = true;
+    while (condition){
+        condition = false;
+        for ( int i = 0; i < us.size()-1; i++ ){
+            if ( us[i].score < us[i+1].score ){
+                userScore temp;
+                temp = us[i];
+                us[i] = us[i+1];
+                us[i+1] = temp;
+                condition = true;
+            }
+        }
+    }
+
+    for ( int i=0 ; i<us.size() ; i++ ){
+        cout << i+1 << ") " << us[i].name << " with Score: " << us[i].score << endl;
+    }
+    
+    file.close();
+    return;
+}
 
 // Start the game
 void Menu::playGame(User* user) {
@@ -100,9 +151,11 @@ void Menu::playGame(User* user) {
 // Start the menu and main control loop
 void Menu::startMenu() {
     char choice;
+    clearScreen();
     while (true) {
         displayMainMenu();
         cin >> choice;
+        clearScreen();
 
         switch (choice) {
         case '1':
