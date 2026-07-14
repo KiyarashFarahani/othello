@@ -3,7 +3,7 @@ Othello game with SFML!
 
 ## Todo list
 ### Implement the game logic
-- [ ] set initial positions
+- [x] set initial positions
 - [ ] calculate possible moves in each turn
 - [ ] logic to flip the pieces
 

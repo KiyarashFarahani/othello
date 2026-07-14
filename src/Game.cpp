@@ -35,6 +35,12 @@ void Game::initBoard() {
             this->board[i][j] = 0;
         }
     }
+    
+    // Set initial Othello positions (center 4 pieces)
+    this->board[3][3] = 2; // white
+    this->board[3][4] = 1; // black
+    this->board[4][3] = 1; // black
+    this->board[4][4] = 2; // white
 }
 
 void Game::initWindow() {
