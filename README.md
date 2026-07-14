@@ -8,8 +8,13 @@ Othello game with SFML!
 - [ ] logic to flip the pieces
 
 ### Implement the GUI
-- [ ] draw the 8x8 grid
+- [x] draw the 8x8 grid
 - [ ] draw the B/W pieces
+
+### User system
+- [x] user registration and login
+- [x] admin role with user deletion
+- [x] best scores leaderboard
 
 ### Bonus points
 - [ ] display ASCII art in the menu
@@ -17,3 +22,4 @@ Othello game with SFML!
 ## Further things to do
 - [ ] encrypt users' data
 - [ ] make a graphical menu instead of CLI
+- [ ] show last game functionality
