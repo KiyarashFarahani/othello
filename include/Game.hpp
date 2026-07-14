@@ -20,8 +20,12 @@ class Game {
         sf::Text leftText;
         sf::Text rightText;
 
+        static const int BOARD_SIZE = 8;
+        int board[BOARD_SIZE][BOARD_SIZE];
+
         void initVariables();
         void initWindow();
+        void initBoard();
 
     public:
 

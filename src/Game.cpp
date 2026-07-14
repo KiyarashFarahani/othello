@@ -25,6 +25,16 @@ void Game::initVariables () {
     
     this->leftText.setFillColor(sf::Color::White);
     this->rightText.setFillColor(sf::Color::White);
+
+    this->initBoard();
+}
+
+void Game::initBoard() {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            this->board[i][j] = 0;
+        }
+    }
 }
 
 void Game::initWindow() {
