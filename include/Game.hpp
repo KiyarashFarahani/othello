@@ -37,6 +37,7 @@ class Game {
         virtual void update();
         virtual void render();
         sf::VertexArray drawGrid(float topOffset);
+        void drawPieces(float topOffset);
 };
 
 #endif

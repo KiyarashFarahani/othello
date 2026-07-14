@@ -143,6 +143,9 @@ void Game::render() {
     sf::VertexArray lines = drawGrid(infoHeight);  // Pass the infoHeight to drawGrid
     this->window->draw(lines);
 
+    // Draw the pieces
+    drawPieces(infoHeight);
+
     // Draw the text
     this->window->draw(leftText);
     this->window->draw(rightText);
@@ -183,4 +186,40 @@ sf::VertexArray Game::drawGrid(float topOffset) {
     }
 
     return lines;
+}
+
+void Game::drawPieces(float topOffset) {
+    const int gridSize = 8;
+    const int cellSize = 50;
+
+    sf::Vector2u windowSize = this->window->getSize();
+
+    float availableHeight = windowSize.y - topOffset;
+    float scale = std::min(static_cast<float>(windowSize.x) / (gridSize * cellSize),
+                          static_cast<float>(availableHeight) / (gridSize * cellSize));
+
+    float offsetX = (windowSize.x - (gridSize * cellSize * scale)) / 2;
+    float offsetY = topOffset + (availableHeight - (gridSize * cellSize * scale)) / 2;
+
+    float pieceRadius = (cellSize * scale) * 0.4f;
+
+    for (int i = 0; i < gridSize; i++) {
+        for (int j = 0; j < gridSize; j++) {
+            if (this->board[i][j] != 0) {
+                sf::CircleShape piece(pieceRadius);
+                
+                if (this->board[i][j] == 1) {
+                    piece.setFillColor(sf::Color::Black);
+                } else {
+                    piece.setFillColor(sf::Color::White);
+                }
+
+                float x = offsetX + j * cellSize * scale + (cellSize * scale) / 2 - pieceRadius;
+                float y = offsetY + i * cellSize * scale + (cellSize * scale) / 2 - pieceRadius;
+                piece.setPosition(x, y);
+
+                this->window->draw(piece);
+            }
+        }
+    }
 }

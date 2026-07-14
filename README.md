@@ -9,7 +9,7 @@ Othello game with SFML!
 
 ### Implement the GUI
 - [x] draw the 8x8 grid
-- [ ] draw the B/W pieces
+- [x] draw the B/W pieces
 
 ### User system
 - [x] user registration and login
